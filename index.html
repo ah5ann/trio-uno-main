@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="description"
+    content="Guess the Three words of the day in 4 tries (TrioUno), Each guess will highlight the tiles either green or grey depending on if its right or wrong. ">
+  <meta name="keywords"
+    content="Hangman, triouno, trio-uno, wordle, guessing, game, guess, Trio Uno, TrioUno, Trio-Uno,">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css?v=2"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="./styles/styless.css?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css?v=2"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="styles/animate.css?v=3">
+  <link rel="stylesheet" href="styles/home.css?v=3">
+  <title>TrioUno - Guess The Word Game</title>
+
+</head>
+
+<body>
+
+  <div class="loading" id="load">
+    <div class="loading-text">
+      <span class="loading-text-words">T</span>
+      <span class="loading-text-words">r</span>
+      <span class="loading-text-words">i</span>
+      <span class="loading-text-words">o</span>
+      <span class="loading-text-words">U</span>
+      <span class="loading-text-words">n</span>
+      <span class="loading-text-words">o</span>
+
+      <div class="notloads"><span class="notload" style="color:#fff;">made by <span style="color: red">Ahsan</span>
+        </span></div>
+    </div>
+
+  </div>
+  <div id="dtroy" style="color: rgb(0, 0, 0);
+    z-index: 9999;
+    border: 1px solid black;
+    position: absolute;
+    top: 35px;
+    display:none;
+    background: rgb(255, 255, 255);
+    height: 7%;
+    width: 200px;
+    padding-left: 3px;
+    list-style-type:none;"></div>
+
+  <script src="confetti.js" style="position:relative;"></script>
+  <div id="myModal" class="modal1" style="border:solid black 1px;">
+
+    <!-- Modal content -->
+    <div class="modal-content1" id="modal1" style="
+    padding: 16px 15px 12px 15px;">
+      <button type="submit" value="Confirm" onclick="closeDialog()" class="closehelp">&#x2715;</button>
+      <!--<span class="closedx" id="closedx"style="border:none;">&times;</span>-->
+      <p>Guess the <strong style="font-weight: bold;">WORDS</strong> in four tries<br>
+        <br>Each word begins with the same letter. All words are 6 letters long<br>
+        <br>After each guess the color of the tiles will change to show what letters you have used and what letters are
+        not in the word list<br>
+        <br>At the end of the game the yellow tiles represent the letters you did not guess.<br>
+        <hr class="solid" style="width:95%;">
+        <strong>Examples</strong><br><br>
+        <span id="modalSpan" style="border:solid black 1px;background:rgb(106, 170, 100);color:#fff;">A</span>
+        <span id="modalSpan" style="border:solid black 1px;">L</span>
+        <span id="modalSpan" style="border:solid black 1px;">W</span>
+        <span id="modalSpan" style="border:solid black 1px;">A</span>
+        <span id="modalSpan" style="border:solid black 1px;">Y</span>
+        <span id="modalSpan" style="border:solid black 1px;">S</span><br>
+      <p id="modtext">The letter <strong>A</strong> is in the word(s)</p>
+
+      <span id="modalSpan" style="border:solid black 1px;">A</span>
+      <span id="modalSpan" style="border:solid black 1px;background:rgb(201, 180, 88);color:#fff;">C</span>
+      <span id="modalSpan" style="border:solid black 1px;">C</span>
+      <span id="modalSpan" style="border:solid black 1px;">E</span>
+      <span id="modalSpan" style="border:solid black 1px;">P</span>
+      <span id="modalSpan" style="border:solid black 1px;">T</span><br>
+      <p id="modtext">The letter <strong>C</strong> is in the word(s) but was not guessed</p>
+
+      <span id="modalSpan" style="border:solid black 1px;">A</span>
+      <span id="modalSpan" style="border:solid black 1px;">S</span>
+      <span id="modalSpan" style="border:solid black 1px;background:rgb(19, 20, 20);color:#fff;">D</span>
+      <span id="modalSpan" style="border:solid black 1px;">F</span>
+      <span id="modalSpan" style="border:solid black 1px;">G</span>
+      <span id="modalSpan" style="border:solid black 1px;">H</span><br>
+      <p id="modtext">The letter <strong>D</strong> is not in the word(s)</p>
+      </p>
+      <hr class="solid" style="width:95%;"><br>
+      <p>Click the <span style="color:green;">?</span> for a letter in the word <br>
+        Note: You cannot use the hint when you are on your last life!<br>
+        and letter given by the hint you may already have guessed it.</p>
+
+
+    </div>
+
+
+  </div>
+  <div class="modal fade" id="statsModal" tabindex="-1" role="dialog" aria-labelledby="statsModal" aria-hidden="true"
+    style="top:10%;">
+    <div class="modal-dialog" role="document">
+      <div class="alert alert-success alert-dismissible fade show" role="alert" id="notificationCOPY"
+        style="display: none;">
+        Copied To Clipboard!
+      </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" style="border:none;">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="statsModalBody">
+
+          <div>
+            <h2><strong>STATISTICS</strong></h2>
+          </div>
+          <div class="values">
+            <div class="value">
+              <div class="unitValue" id="days-played">0</div>
+              <div>Days <br> Played</div>
+            </div>
+            <div class="value">
+              <div class="unitValue" id="current-streak">0</div>
+              <div>Current <br> Streak</div>
+            </div>
+            <div class="value">
+              <div class="unitValue" id="max-streak">0</div>
+              <div>Max <br> Streak</div>
+            </div>
+            <div class="value">
+              <div class="unitValue" id="win-percentage">0</div>
+              <div> Win <br> %</div>
+            </div>
+          </div>
+          <div id="puzzle-emoji-div">
+            <p id="puzzle-emojis" style="text-align: center;"></p>
+          </div>
+          <div>
+            <button class="share-button" id="share-button">Share <i class="fa-solid fa-share"
+                style="font-size: 12px;margin-left: 10px;"></i></button>
+          </div>
+          <br>
+          <div id="twords"></div>
+          <p>Next TrioUno</p>
+          <div id="bbb2"></div>
+
+          <script>
+            $(document).ready(function () {
+                // Event handler for clicking on <span> elements
+                $(document).on('click', '#puzzle span', function () {
+                    var clickedSpan = $(this);
+            
+                    // Initialize the word variable
+                    var fullWord = '';
+            
+                    // Collect spans for the current word
+                    var startSpan = clickedSpan;
+                    var endSpan = clickedSpan;
+            
+                    // Move backwards to find the start of the word
+                    while (startSpan.prev().length && startSpan.prev().is('span')) {
+                        startSpan = startSpan.prev();
+                    }
+            
+                    // Move forwards to find the end of the word
+                    while (endSpan.next().length && endSpan.next().is('span')) {
+                        endSpan = endSpan.next();
+                    }
+            
+                    // Collect all spans from startSpan to endSpan (inclusive)
+                    var currentSpan = startSpan;
+                    while (currentSpan.length && currentSpan[0] !== endSpan[0].nextSibling) {
+                        if (currentSpan.is('span')) {
+                            fullWord += currentSpan.text();
+                        }
+                        currentSpan = currentSpan.next();
+                    }
+            
+                    // Log the full word to the console
+                    console.log('Full word:', fullWord);
+            
+                    // Make an AJAX request to get the dictionary definition
+                    $.ajax({
+                        url: 'https://api.dictionaryapi.dev/api/v2/entries/en/' + fullWord,
+                        dataType: 'json',
+                        success: function (e) {
+                            var defi = '';
+                            if (e[0] && e[0]['meanings'] && e[0]['meanings'][0] && e[0]['meanings'][0]['definitions']) {
+                                $.each(e[0]['meanings'][0]['definitions'], function (k, v) {
+                                    defi += '<div><div><b>Definition:</b> ' + v.definition + '</div>';
+                                    defi += '<div><b>Example:</b> ' + (v.example || 'No example available') + '</div></div><br>';
+                                });
+                            } else {
+                                defi = '<div>No definitions found</div>';
+                            }
+                            $('#deficont').html(defi);
+                            $('#defimodel').show();
+                        },
+                        error: function () {
+                            $('#deficont').html('<div>Error retrieving definition</div>');
+                            $('#defimodel').show();
+                        }
+                    });
+                });
+            
+                // Event handler for closing the definition modal
+                $(document).on('click', '.deficlose', function () {
+                    $('#defimodel').hide();
+                });
+            });
+            </script>
+            
+            
+            
+
+          <br>
+          <a href="bowling" style="border: solid black 1px;
+    background: #707070;
+    color: white;
+    border-radius: 4px;
+    padding: 5px 5px 5px 5px;
+    font-family: playfair display;
+    text-decoration: none;">Check Out Bowling ðŸŽ³</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModalk" class="modalk">
+    <div class="modal-content1k" id="modalk">
+      <span class="closedz" id="closedz" style="border:none;">&times;</span>
+      <p style="    text-align: center;
+    top: -28px;">SETTINGS</p>
+      <div id="darkmode" style="height:13%;border-top:solid #000000 1.5px;">
+
+        <label class="switch" style="right:-80%;width:20%;top:4px;">
+          <p id="dmo" style="left:-260px;width:150px;top:5px;">Dark Mode</p> <input onclick="myFunction4()" id="myCheck"
+            type="checkbox" checked>
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+
+      <div id="feedback" style="border-top:solid #000000 1.5px;">
+        <p>Feedback <a href="mailto:triounoo@gmail.com" style="right:-50%;">Email Us &#9993;</a></p>
+      </div>
+      <p style="top:70px;">&copy; 2022 ASN</p>
+    </div>
+  </div>
+
+
+  <div id="fullpagecontrol">
+    <div class="section" id="section">
+      </br>
+      <div id="outer">
+        <div id="topbox">
+          <div class="waviy">
+            <span style="--i:1">t</span>
+            <span style="--i:2">r</span>
+            <span style="--i:3; letter-spacing: -5px;">i</span>
+            <span style="--i:4;letter-spacing: -5px;">o</span>
+            <span style="--i:5;margin:-7px;"></span>
+            <span style="--i:6">u</span>
+            <span style="--i:7;letter-spacing: 5px;">n</span>
+            <span style="--i:8 ;letter-spacing: 5px;">o</span>
+          </div>
+
+          <i id="openStatsModal" class="fa fa-bar-chart"
+            style="font-size:25px;margin-left: 10px;transform: rotate(90deg)scaleX(-1);border-radius: 1px;overflow: hidden;padding:8px;position:absolute;top:-3px;color:#000000;"
+            data-toggle="modal" data-target="#statsModal"></i>
+          <!-- Trigger/Open The Modal -->
+          <button id="myBtn">&#9432;</button>
+          <button id="myBtnn" class="fa-solid fa-gear" data-clipboard-text="1"></button>
+        </div>
+        <hr class="">
+      </div>
+
+
+      <br>
+      <div class="wrapper">
+        <div class="typing-demo">
+          Start by typing any letter
+        </div>
+      </div>
+      <div class="defishowmsg">
+        <div></div>
+      </div>
+      <br>
+      <div id="defimodel">
+        <div class="deficlose">&#x2715</div>
+        <div id="deficont"></div>
+      </div>
+
+      <div id="puzzle" class="puzzle"></div>
+      <div id="definotify">
+        <div>Click any word to show definition</div>
+      </div>
+      <div style="display: flex; justify-content: space-between; display: table; margin: 0 auto;">
+        <p id="guesses" style="margin-top: 10px; color:red;font-family:auto;font-size:20px;  -webkit-text-stroke-width: 0.5px;
+-webkit-text-stroke-color: #000000;"></p>
+
+      </div>
+      <p id="winlose" style="display: none; margin: 0 auto;font-family: monospace;font-size:17px;color:#dbdbdb;">
+        pending...</p>
+
+
+
+      <input type="text" id="search_field" style="background-color: #2f4f4f00;
+    border: none;position:absolute;" name="fname" disabled>
+      <hr class="hr2">
+      <div id="bbb" style="display:none;"></div>
+      <h4 id="bbb1" style="display:none;">Topic:<span id="tops" style="
+    font-size: 15px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    top: 0px;
+    border: none;display:none;"></span></h4>
+
+      <hr class="">
+      <div id="myModal" class="modal">
+      </div>
+
+      <div class="kbbox" id="kbbox">
+        <div id="keyboard"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="scripts/main1.js"></script>
+        <script src="./lib/js/jkeyboard.js"></script>
+        <script>
+          $('#keyboard').jkeyboard({
+            layout: "english_capital",
+            input: $('#puzzle'),
+            customLayouts: {
+              selectable: ["english_capital"],
+              english_capital: [
+                ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',],
+                ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',],
+                ['Z', 'X', 'C', 'V', 'B', 'N', 'M',],
+
+              ],
+            }
+          });
+        </script>
+
+        <button id="reset" class="button"></button>
+
+        <script>
+          var resetBtn = document.getElementById("reset");
+          if (resetBtn) {
+            resetBtn.disabled = true; // Correct way to disable the button
+          } else {
+            console.error('Element with id "resetBtn" not found.');
+          }
+        </script>
+
+      </div>
+      <marquee width="100%" direction="left" height="20px">
+        If you played before March 17th 2022 clear your history/cache to reset the game and start from scratch or the
+        stats will not calculate properly!
+      </marquee>
+
+      <button onclick="toggleConfetti();" class="btn btn-warning" id="clickButton">🎉</button>
+      <button onclick="livesReduction();" class="livesReduction" id="livesReduction"
+        style="position: relative; top: -145px; right: -270px;border:none;"><span id="hint"
+          style="color: green;border:none;">?</span></button>
+
+
+      <!--  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+      <script src="https://unpkg.com/sharect@2.0.0/dist/sharect.js"></script>
+      <script src="./scripts/data.js?v=2"></script>
+      <script src="./scripts/requestt.js?v=2"></script>
+      <script src="./scripts/hangman.js?v=rerceesrfrd4e"></script>
+      <script src="./scripts/app.js?vr=y"></script>
+
+
+    </div>
+
+
+
+
+
+</body>
+
+</html>
+<style>
+  .swiper-slide {
+    scale: 0.6;
+  }
+
+  .swiper-slide-next,
+  .swiper-slide-duplicate-next {
+    scale: 1;
+  }
+</style>
